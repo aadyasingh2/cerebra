@@ -1,0 +1,130 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500&display=swap');
+
+.study-container {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding: 40px;
+}
+
+.study-card {
+    width: 100%;
+    max-width: 560px;
+    min-height: 320px;
+    position: relative;
+    perspective: 1200px;
+}
+
+.card-inner {
+    width: 100%;
+    height: 100%;
+    min-height: 320px;
+    position: relative;
+    transform-style: preserve-3d;
+    transition: transform 0.5s ease;
+}
+
+.card-inner.flipped {
+    transform: rotateY(180deg);
+}
+
+.front,
+.back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    min-height: 320px;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 32px;
+    padding: 48px 40px 64px 40px;
+    text-align: center;
+    border: 1px solid #2b2b2b;
+}
+
+.front {
+    background-color: #faf7f2;
+}
+
+.back {
+    background-color: #f5f0e8;
+    transform: rotateY(180deg);
+}
+
+.front p,
+.back p {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    font-weight: 400;
+    color: #1a1a1a;
+    line-height: 1.5;
+}
+
+.front button,
+.back button {
+    padding: 9px 22px;
+    background: transparent;
+    border: 1px solid #2b2b2b;
+    font-family: 'Inter', sans-serif;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #1a1a1a;
+    cursor: pointer;
+    transition: background 0.15s, color 0.15s;
+}
+
+.front button:hover {
+    background-color: #1a1a1a;
+    color: #f5f0e8;
+}
+
+.back button {
+    border-color: #c41a1a;
+    color: #c41a1a;
+}
+
+.back button:hover {
+    background-color: #c41a1a;
+    color: #f5f0e8;
+    border-color: #c41a1a;
+}
+
+.study-card .prev,
+.study-card .next {
+    position: absolute;
+    bottom: -1px;
+    z-index: 10;
+    padding: 11px 24px;
+    background-color: #1a1a1a;
+    color: #f5f0e8;
+    border: 1px solid #1a1a1a;
+    font-family: 'Inter', sans-serif;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background 0.15s, border-color 0.15s;
+}
+
+.study-card .prev {
+    left: -1px;
+}
+
+.study-card .next {
+    right: -1px;
+}
+
+.study-card .prev:hover,
+.study-card .next:hover {
+    background-color: #c41a1a;
+    border-color: #c41a1a;
+}
