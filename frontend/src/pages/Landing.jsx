@@ -1,7 +1,9 @@
 import React from 'react'
 import './landing.css'
-
+import { useNavigate } from 'react-router-dom'
 function Landing() {
+
+    const navigate = useNavigate()
     return (
         <div className="landing-root">
             <div className="noise-overlay" />
@@ -10,8 +12,12 @@ function Landing() {
             <nav className="landing-nav">
                 <div className="nav-logo">Cerebr<span>a</span></div>
                 <div className="nav-actions">
-                    <button className="btn-ghost">Login</button>
-                    <button className="btn-primary">Get started</button>
+                    <button className="btn-ghost" onClick={() => {
+                        navigate('/login')
+                    }}>Login</button>
+                    <button className="btn-primary" onClick={() => {
+                        navigate('/signup')
+                    }}>Get started</button>
                 </div>
             </nav>
 
@@ -33,7 +39,9 @@ function Landing() {
 
                 <div className="hero-cta">
                     <button className="btn-hero-primary">Start studying →</button>
-                    <button className="btn-hero-ghost">Login</button>
+                    <button className="btn-hero-ghost" onClick={() => {
+                        navigate('/login')
+                    }}>Login</button>
                 </div>
 
                 <div className="features-grid">

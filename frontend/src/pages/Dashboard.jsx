@@ -28,7 +28,7 @@ Text: ${text}`
         setFlashcards(JSON.parse(flashcard))
         setFileState('ready')
         const token = localStorage.getItem('token')
-        fetch('http://localhost:3000/api/sessions', {
+        fetch('https://cerebra-de8p.onrender.com/api/sessions', {
             method: 'POST',
             headers: {
                 'Authorization': token,
@@ -52,7 +52,7 @@ Text: ${text}`
     }
     useEffect(() => {
         const token = localStorage.getItem('token')
-        fetch('http://localhost:3000/api/sessions', {
+        fetch('https://cerebra-de8p.onrender.com/api/sessions', {
             method: 'GET',
             headers: {
                 'Authorization': token

@@ -56,7 +56,7 @@ function Login() {
 
                 <button className="form-submit" onClick={() => {
                     if (formTab == 'login') {
-                        fetch("http://localhost:3000/api/login", {
+                        fetch("https://cerebra-de8p.onrender.com/api/login", {
                             method: 'POST',
                             headers: { "Content-Type": "application/json" },
                             body: JSON.stringify({
@@ -69,7 +69,7 @@ function Login() {
                         })
                     }
                     else {
-                        fetch("http://localhost:3000/api/signup", {
+                        fetch("https://cerebra-de8p.onrender.com/api/signup", {
                             method: 'POST',
                             headers: { "Content-Type": "application/json" },
                             body: JSON.stringify({
