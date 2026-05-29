@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { GoogleGenerativeAI } from '@google/generative-ai'
 import './Dashboard.css'
 import { X, SidebarOpenIcon } from 'lucide-react'
@@ -15,16 +15,30 @@ function Dashboard() {
     const [files, setFileState] = useState('input')
     const [flashcards, setFlashcards] = useState([])
     const [textInput, setTextInput] = useState('')
-
+    const [sessions, setSessions] = useState([])
 
     async function generateFlashcards(text) {
         const prompt = `Generate flashcards from the following text. Return ONLY a JSON array, no markdown, no explanation. Each object must have a "front" and "back" field. Example: [{"front": "question", "back": "answer"}]
 Text: ${text}`
         let response = await model.generateContent(prompt)
-        let flashcards = response.response.text()
-        flashcards = flashcards.replace(/```json|```/g, '').trim()
-        setFlashcards(JSON.parse(flashcards))
+
+        let flashcard = response.response.text()
+        console.log(flashcard)
+        flashcard = flashcard.replace(/```json|```/g, '').trim()
+        setFlashcards(JSON.parse(flashcard))
         setFileState('ready')
+        const token = localStorage.getItem('token')
+        fetch('http://localhost:3000/api/sessions', {
+            method: 'POST',
+            headers: {
+                'Authorization': token,
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                'title': textInput.slice(0, 30),
+                'cards': JSON.parse(flashcard)
+            })
+        })
     }
 
     function sessionStart() {
@@ -36,7 +50,17 @@ Text: ${text}`
     function openSidebar() {
         setSidebar(true)
     }
-
+    useEffect(() => {
+        const token = localStorage.getItem('token')
+        fetch('http://localhost:3000/api/sessions', {
+            method: 'GET',
+            headers: {
+                'Authorization': token
+            }
+        }).then(res => res.json()).then((data) => {
+            setSessions(data)
+        })
+    }, [])
     return (
         <>
             <div className='container'>
@@ -52,9 +76,7 @@ Text: ${text}`
                         setFileState('input')
                     }}>New Session</button>
                     <ul>
-                        <li>Calculus Spherical Integration</li>
-                        <li>Physics Heisenberg Principle</li>
-                        <li>Theory of Computation DFA</li>
+                        {sessions.map((session, index) => <li key={index}>{session.title}</li>)}
                     </ul>
                 </div>
                 }

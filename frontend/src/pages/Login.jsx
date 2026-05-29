@@ -1,9 +1,13 @@
 import React, { useState } from 'react'
 import './Login.css'
+import { useNavigate } from 'react-router-dom'
 
 function Login() {
     const [formTab, setFormTab] = useState('login')
-
+    const [name, setName] = useState('')
+    const [email, setEmail] = useState('')
+    const [pass, setPass] = useState('')
+    const navigate = useNavigate()
     return (
         <div className="login-root">
             <div className="login-card">
@@ -36,21 +40,46 @@ function Login() {
                 {formTab === 'signup' && (
                     <div className="form-group">
                         <label>Name</label>
-                        <input type="text" placeholder="your name" />
+                        <input type="text" placeholder="your name" value={name} onChange={(e) => setName(e.target.value)} />
                     </div>
                 )}
 
                 <div className="form-group">
                     <label>Email</label>
-                    <input type="email" placeholder="you@example.com" />
+                    <input type="email" placeholder="you@example.com" value={email} onChange={(e) => setEmail(e.target.value)} />
                 </div>
 
                 <div className="form-group">
                     <label>Password</label>
-                    <input type="password" placeholder="••••••••" />
+                    <input type="password" placeholder="••••••••" value={pass} onChange={(e) => setPass(e.target.value)} />
                 </div>
 
-                <button className="form-submit">
+                <button className="form-submit" onClick={() => {
+                    if (formTab == 'login') {
+                        fetch("http://localhost:3000/api/login", {
+                            method: 'POST',
+                            headers: { "Content-Type": "application/json" },
+                            body: JSON.stringify({
+                                email: email,
+                                password: pass
+                            })
+                        }).then(res => res.json()).then((data) => {
+                            localStorage.setItem('token', data.token)
+                            navigate('/dashboard')
+                        })
+                    }
+                    else {
+                        fetch("http://localhost:3000/api/signup", {
+                            method: 'POST',
+                            headers: { "Content-Type": "application/json" },
+                            body: JSON.stringify({
+                                name: name,
+                                email: email,
+                                password: pass
+                            })
+                        })
+                    }
+                }}>
                     {formTab === 'login' ? 'Login →' : 'Create account →'}
                 </button>
 
@@ -61,7 +90,7 @@ function Login() {
                     }
                 </p>
             </div>
-        </div>
+        </div >
     )
 }
 
