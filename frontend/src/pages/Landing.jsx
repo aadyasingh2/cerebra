@@ -38,7 +38,9 @@ function Landing() {
                 </p>
 
                 <div className="hero-cta">
-                    <button className="btn-hero-primary">Start studying →</button>
+                    <button className="btn-hero-primary" onClick={() => {
+                        navigate('/signup')
+                    }}>Start studying →</button>
                     <button className="btn-hero-ghost" onClick={() => {
                         navigate('/login')
                     }}>Login</button>
