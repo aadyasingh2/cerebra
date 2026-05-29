@@ -1,16 +1,15 @@
 import React, { useState } from 'react'
 import './recall.css'
 
-function RecallMode() {
+function RecallMode(props) {
+    if (!props.flashcardsArray || props.flashcardsArray.length === 0) {
+        return <div>Loading...</div>
+    }
     const [screen, setScreen] = useState('idle')
     const [score, setScore] = useState(0)
     const [cardsIndex, setCardsIndex] = useState(1)
     const [currentInput, setInput] = useState("")
-    const cards = [
-        { front: "What is a derivative?", back: "Rate of change of a function" },
-        { front: "What is an integral?", back: "Area under a curve" },
-        { front: "What is the chain rule?", back: "d/dx[f(g(x))] = f'(g(x)) · g'(x)" },
-    ]
+
 
     return (
         <div className='recall-container'>
@@ -26,7 +25,7 @@ function RecallMode() {
                 (screen == 'recall' &&
                     <div className='study-card'>
                         <div className='front'>
-                            <p>{cards[cardsIndex - 1].front}</p>
+                            <p>{props.flashcardsArray[cardsIndex - 1].front}</p>
                             <input type='text' onChange={(event) =>
                                 setInput(event.target.value)
 
@@ -34,10 +33,10 @@ function RecallMode() {
 
                             <button onClick={() => {
                                 setInput("")
-                                if (currentInput == cards[cardsIndex - 1].back) {
+                                if (currentInput == props.flashcardsArray[cardsIndex - 1].back) {
                                     setScore(score + 1)
 
-                                } if (cardsIndex === cards.length) { setScreen('results') } else { setCardsIndex(cardsIndex + 1) }
+                                } if (cardsIndex === props.flashcardsArray.length) { setScreen('results') } else { setCardsIndex(cardsIndex + 1) }
 
                             }}>Submit</button>
                         </div>
