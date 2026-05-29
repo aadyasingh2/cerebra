@@ -76,7 +76,7 @@ function Login() {
                                 name: name,
                                 email: email,
                                 password: pass
-                            })
+                            }).then(() => setFormTab('login'))
                         })
                     }
                 }}>
